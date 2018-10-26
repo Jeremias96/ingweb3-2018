@@ -175,8 +175,23 @@ public class TaxesCalculator
 
     //SAVE
     private static int saveBill(float amount){
-        //TODO
-    	return 0;
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        Integer billId = null;
+
+        try {
+            tx = session.beginTransaction();
+            
+            billId = (Integer) session.save(bill);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return billId;
     }
 
     //UPDATE
