@@ -48,4 +48,8 @@ public class Billings {
     public void setDate(Date date) {
         this.date = date;
     }
+    
+    public String toString() {
+	    return "Amount: '" + this.amount + "', Date: '" + this.date;
+	}
 }

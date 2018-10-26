@@ -9,36 +9,40 @@ public class Clients {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "client_id", nullable = false)
-	private int client_id;
+	private int clientId;
 	
 	@Column(name = "name", length = 50)
 	private String name;
 
 	@Column(name = "last_name", length = 50)
-	private String last_name;
+	private String lastName;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "address_id")
 	private Addresses address;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "identification_id")
+	private IdentificationType identificationType;
 
 	public Clients(){
 		
 	}
 
-	public Clients(int client_id, String name, String last_name, Addresses address) {
+	public Clients(int clientId, String name, String lastName, Addresses address) {
 		super();
-		this.client_id = client_id;
+		this.clientId = clientId;
 		this.name = name;
-		this.last_name = last_name;
+		this.lastName = lastName;
 		this.address = address;
 	}
 
 	public int getClient_id() {
-		return client_id;
+		return clientId;
 	}
 
-	public void setClient_id(int client_id) {
-		this.client_id = client_id;
+	public void setClient_id(int clientId) {
+		this.clientId = clientId;
 	}
 
 	public String getName() {
@@ -49,12 +53,12 @@ public class Clients {
 		this.name = name;
 	}
 
-	public String getLast_name() {
-		return last_name;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLast_name(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public Addresses getAddress() {
@@ -63,5 +67,9 @@ public class Clients {
 
 	public void setAddress(Addresses address) {
 		this.address = address;
+	}
+	
+	public String toString() {
+	    return "Name: '" + this.name + "', Last Name: '" + this.lastName;
 	}
 }
