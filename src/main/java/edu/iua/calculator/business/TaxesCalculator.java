@@ -175,14 +175,22 @@ public class TaxesCalculator
 
     //SAVE
     private static int saveBill(float amount){
+    	Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
         Integer billId = null;
 
-        Billings bill = new Billings();
-        bill.setAmount(amount);
-        bill.setDate(new Date(new java.util.Date().getTime()));
-        
-        billId = FactoryDAO.getInstance().getBillingsDAO().save(bill);
+        try {
+            tx = session.beginTransaction();
             
+            billId = (Integer) session.save(amount);
+
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
         return billId;
     }
 
